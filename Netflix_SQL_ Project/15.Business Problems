@@ -1,0 +1,57 @@
+customer_id,customer_name,Reg_date
+1,John Doe,2025-01-15
+2,Jane Smith,2025-02-20
+...
+33,Alice Johnson,2025-08-30
+
+
+
+
+
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+import numpy as np
+
+
+df =pd.read_csv('/content/Banking.csv')
+df.head(5)
+
+df.info()
+
+
+bins = [0,100000,300000, float('inf')]
+labels = ['Low','Med','High']
+
+df['Income Band'] = pd.cut(df['Estimated Income'], bins=bins,labels=labels, right=False)
+
+
+df['Income Band'].value_counts().plot(kind='bar')
+
+
+
+
+
+
+#Examine  the distrbution of unqiue cataegories in categorical columns
+categorical_cols = df[["BRId","GenderId","IAId","Amount of Credit Cards",
+"Nationality","Occupation","Fee Structure","Loyalty Classification","Properties Owned","Risk Weighting","Income Band"]].columns
+
+
+for col in categorical_cols:
+  print(f"Value Count for '{col}':")
+  display(df[col].value_counts())
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  for i, predictor in enumerate(df[["BRId","GenderId","IAId","Amount of Credit Cards","Nationality","Occupation","Fee Structure","Loyalty Classification","Properties Owned","Risk Weighting","Income Band"]].columns):
+  plt.figure(i)
+  sns.countplot(data=df, x=predictor)
